@@ -1,0 +1,33 @@
+local UserInputService = game:GetService("UserInputService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Shoot = ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("Shoot")
+
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+	if gameProcessed then return end
+	if input.KeyCode == Enum.KeyCode.Q then
+		-- First FireServer call
+		local args1 = {
+			[1] = 0,
+			[2] = "Starting",
+			[3] = "up",
+			[4] = false,
+			[5] = 0,
+			[6] = 0
+		}
+		Shoot:FireServer(unpack(args1))
+
+		-- Optional short delay between calls
+		task.wait(0.1)
+
+		-- Second FireServer call
+		local args2 = {
+			[1] = 1.0345831289887428,
+			[2] = "Ending",
+			[3] = "up",
+			[4] = false,
+			[5] = 0,
+			[6] = 0
+		}
+		Shoot:FireServer(unpack(args2))
+	end
+end)
